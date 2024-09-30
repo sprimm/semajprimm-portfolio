@@ -1,0 +1,13 @@
+/**
+ * About.jsx
+ * Semaj Primm
+ * 301409310
+ * September 26, 2024
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: 'Work Sans', sans-serif;
+}
