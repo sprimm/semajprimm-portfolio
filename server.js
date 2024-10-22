@@ -1,17 +1,18 @@
-const express = require("express");
-const path = require("path");
-const app = express();
+const app = require('./express.js')
 
-const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:<${process.env.DB_PASSWORD}>@cluster0.cpmud.mongodb.net/?retryWrites=true&w=majority&appName=${process.env.APP_NAME}`
+const mongoose = require("mongoose")
+const uri = process.env.MONGODB_URI
+console.log(uri)
+const config = require("./server/config/config.js")
 
-app.use("/", express.static(path.join(__dirname, "public")))
-
-/* app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "index.html"));
-}) */
-
-app.get("/", (req, res) => {
-    res.json({"message": "Welcome to DressStore application."})
+mongoose.Promise = global.Promise
+mongoose.connect(config.mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
+.then(() => console.log("Database connected Successfully"))
+.catch(err => console.error(`Connection Failed: ${err.message}`))
 
-app.listen(8080, () => {})
+app.listen(config.port, () => {
+    console.info(`Server started on the port ${config.port}`)
+})
